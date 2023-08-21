@@ -1,6 +1,10 @@
-﻿using Spectre.Console;
+﻿using CoffeeShop.EF;
+using Spectre.Console;
 
-var option = AnsiConsole.Prompt(
+var isAppRunning = true;
+while (isAppRunning)
+{
+    var option = AnsiConsole.Prompt(
     new SelectionPrompt<MenuOptions>()
     .Title("What would you like to do?")
     .AddChoices(
@@ -11,6 +15,29 @@ var option = AnsiConsole.Prompt(
         MenuOptions.ViewAllProducts,
         MenuOptions.Quit));
 
+    switch (option)
+    {
+        case MenuOptions.AddProduct:
+            ProductController.AddProduct();
+            break;
+        case MenuOptions.DeleteProduct:
+            ProductController.DeleteProduct();
+            break;
+        case MenuOptions.UpdateProduct:
+            ProductController.UpdateProduct();
+            break;
+        case MenuOptions.ViewProduct:
+            ProductController.GetProductById();
+            break;
+        case MenuOptions.ViewAllProducts:
+            ProductController.GetProducts();
+            break;
+        case MenuOptions.Quit:
+            ProductController.Quit();
+            break;
+    }
+}
+
 enum MenuOptions
 {
     AddProduct,
@@ -20,3 +47,6 @@ enum MenuOptions
     ViewAllProducts,
     Quit
 }
+
+
+
