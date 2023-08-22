@@ -32,9 +32,11 @@ internal class ProductController
         throw new NotImplementedException();
     }
 
-    internal static void UpdateProduct()
+    internal static void UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        using var db = new ProductsContext();
+        db.Update(product);
+        db.SaveChanges();
     }
 
     internal static List<Product> GetProducts()
