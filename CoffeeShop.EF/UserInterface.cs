@@ -8,9 +8,11 @@ static internal class UserInterface
     {
         var panel = new Panel($@"Id: {product.Id}
 Name: {product.Name}
-Price: {product.Price}");
-        panel.Header = new PanelHeader("Product Info");
-        panel.Padding = new Padding(2, 2, 2, 2);
+Price: {product.Price}")
+        {
+            Header = new PanelHeader("Product Info"),
+            Padding = new Padding(2, 2, 2, 2)
+        };
 
         AnsiConsole.Write(panel);
 

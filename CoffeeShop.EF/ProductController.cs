@@ -22,7 +22,7 @@ internal class ProductController
     internal static Product GetProductById(int id)
     {
         using var db = new ProductsContext();
-        var product = db.products.SingleOrDefault(x => x.Id == id);
+        var product = db.Products.SingleOrDefault(x => x.Id == id);
 
         return product;
     }
@@ -43,7 +43,7 @@ internal class ProductController
     {
         using var db = new ProductsContext();
 
-        var products = db.products.ToList();
+        var products = db.Products.ToList();
 
         return products;
     }
