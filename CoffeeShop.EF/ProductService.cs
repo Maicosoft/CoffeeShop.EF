@@ -6,8 +6,10 @@ internal class ProductService
 {
     internal static void InsertProduct()
     {
-        var name = AnsiConsole.Ask<string>("Product's name");
-        ProductController.AddProduct(name);
+        Product product = new Product();
+        product.Name = AnsiConsole.Ask<string>("Product's name");
+        product.Price = AnsiConsole.Ask<decimal>("Product's price");
+        ProductController.AddProduct(product);
     }
     internal static void GetAllProducts() 
     {
@@ -22,7 +24,14 @@ internal class ProductService
     internal static void UpdateProduct()
     {
         var product = GetProductOptionInput();
-        product.Name = AnsiConsole.Ask<string>("Product's new name:");
+
+        product.Name = AnsiConsole.Confirm("Update Name?") ?
+            AnsiConsole.Ask<string>("Product's new name:")
+            : product.Name;
+        product.Price = AnsiConsole.Confirm("Update Price?") ?
+            AnsiConsole.Ask<decimal>("Product's new price:")
+            : product.Price;
+
         ProductController.UpdateProduct(product);
     }
     internal static void DeleteProduct()

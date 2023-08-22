@@ -7,7 +7,8 @@ static internal class UserInterface
     internal static void ShowProduct(Product product)
     {
         var panel = new Panel($@"Id: {product.Id}
-Name: {product.Name}");
+Name: {product.Name}
+Price: {product.Price}");
         panel.Header = new PanelHeader("Product Info");
         panel.Padding = new Padding(2, 2, 2, 2);
 
@@ -23,10 +24,15 @@ Name: {product.Name}");
         var table = new Table();
         table.AddColumn("Id");
         table.AddColumn("Name");
+        table.AddColumn("Price");
 
         foreach (var product in products)
         {
-            table.AddRow(product.Id.ToString(), product.Name);
+            table.AddRow(
+                product.Id.ToString(), 
+                product.Name, 
+                product.Price.ToString()
+                );
         }
 
         AnsiConsole.Write(table);
