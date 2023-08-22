@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoffeeShop.EF": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Code\\C# .NET\\The C# Academy\\CoffeeShop.EF\\CoffeeShop.EF\\CoffeeShop.EF\\"
+    }
+  }
+}

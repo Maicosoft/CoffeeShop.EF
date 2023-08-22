@@ -4,8 +4,10 @@
 
 namespace CoffeeShop.EF.Migrations
 {
-    public partial class Initialmigration : Migration
+    /// <inheritdoc />
+    public partial class initialmigration : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -22,6 +24,7 @@ namespace CoffeeShop.EF.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
