@@ -13,4 +13,10 @@ internal class CategoryService
 
         CategoryController.AddCategory(category);
     }
+
+    internal static void GetAllCategories()
+    {
+        var categories = CategoryController.GetCategories();
+        UserInterface.ShowCategoryTable(categories);
+    }
 }

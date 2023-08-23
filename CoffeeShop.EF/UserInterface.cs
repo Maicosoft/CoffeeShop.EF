@@ -15,6 +15,7 @@ static internal class UserInterface
         .Title("What would you like to do?")
         .AddChoices(
             MenuOptions.AddCategory,
+            MenuOptions.ViewAllCategories,
             MenuOptions.AddProduct,
             MenuOptions.DeleteProduct,
             MenuOptions.UpdateProduct,
@@ -26,6 +27,9 @@ static internal class UserInterface
         {
             case MenuOptions.AddCategory:
                 CategoryService.InsertCategory();
+                break;
+            case MenuOptions.ViewAllCategories:
+                CategoryService.GetAllCategories(); 
                 break;
             case MenuOptions.AddProduct:
                 ProductService.InsertProduct();
@@ -47,6 +51,28 @@ static internal class UserInterface
                 break;
         }
     }
+
+    internal static void ShowCategoryTable(List<Category> categories)
+    {
+        var table = new Table();
+        table.AddColumn("Id");
+        table.AddColumn("Name");
+
+        foreach (var category in categories)
+        {
+            table.AddRow(
+                category.Id.ToString(),
+                category.Name
+                );
+        }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("Enter any key to continue");
+        Console.ReadLine();
+        Console.Clear();
+    }
+
     internal static void ShowProduct(Product product)
     {
         var panel = new Panel($@"Id: {product.ProductId}
