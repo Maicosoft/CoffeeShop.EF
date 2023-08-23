@@ -11,7 +11,7 @@ internal class ProductService
         Product product = new();
         product.Name = AnsiConsole.Ask<string>("Product's name");
         product.Price = AnsiConsole.Ask<decimal>("Product's price");
-        product.CategoryId = CategoryService.GetCategoryOptionInput();
+        product.CategoryId = CategoryService.GetCategoryOptionInput().CategoryId;
 
         ProductController.AddProduct(product);
     }
@@ -35,6 +35,9 @@ internal class ProductService
         product.Price = AnsiConsole.Confirm("Update Price?") ?
             AnsiConsole.Ask<decimal>("Product's new price:")
             : product.Price;
+        product.Category = AnsiConsole.Confirm("Update Category?") ?
+            CategoryService.GetCategoryOptionInput()
+            : product.Category;
 
         ProductController.UpdateProduct(product);
     }
