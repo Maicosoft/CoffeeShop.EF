@@ -1,12 +1,49 @@
-﻿using Spectre.Console;
+﻿using CoffeeShop.EF.Models;
+using Spectre.Console;
+using static CoffeeShop.EF.Enums;
 
 namespace CoffeeShop.EF;
 
 static internal class UserInterface
 {
+    static internal void MainMenu()
+    {
+        var option = AnsiConsole.Prompt(
+        new SelectionPrompt<MenuOptions>()
+        .Title("What would you like to do?")
+        .AddChoices(
+            MenuOptions.AddProduct,
+            MenuOptions.DeleteProduct,
+            MenuOptions.UpdateProduct,
+            MenuOptions.ViewProduct,
+            MenuOptions.ViewAllProducts,
+            MenuOptions.Quit));
+
+        switch (option)
+        {
+            case MenuOptions.AddProduct:
+                ProductService.InsertProduct();
+                break;
+            case MenuOptions.DeleteProduct:
+                ProductService.DeleteProduct();
+                break;
+            case MenuOptions.UpdateProduct:
+                ProductService.UpdateProduct();
+                break;
+            case MenuOptions.ViewProduct:
+                ProductService.GetProduct();
+                break;
+            case MenuOptions.ViewAllProducts:
+                ProductService.GetAllProducts();
+                break;
+            case MenuOptions.Quit:
+                ProductController.Quit();
+                break;
+        }
+    }
     internal static void ShowProduct(Product product)
     {
-        var panel = new Panel($@"Id: {product.Id}
+        var panel = new Panel($@"Id: {product.ProductId}
 Name: {product.Name}
 Price: {product.Price}")
         {
@@ -31,7 +68,7 @@ Price: {product.Price}")
         foreach (var product in products)
         {
             table.AddRow(
-                product.Id.ToString(), 
+                product.ProductId.ToString(), 
                 product.Name, 
                 product.Price.ToString()
                 );

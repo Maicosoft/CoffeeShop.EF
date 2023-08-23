@@ -1,11 +1,11 @@
-﻿using Spectre.Console;
+﻿using CoffeeShop.EF.Models;
 
 namespace CoffeeShop.EF;
 
 internal class ProductController
 {
     internal static void AddProduct(Product product)
-    {  
+    {
         using var db = new ProductsContext();
         db.Add(product);
 
@@ -22,7 +22,7 @@ internal class ProductController
     internal static Product GetProductById(int id)
     {
         using var db = new ProductsContext();
-        var product = db.Products.SingleOrDefault(x => x.Id == id);
+        var product = db.Products.SingleOrDefault(x => x.ProductId == id);
 
         return product;
     }
