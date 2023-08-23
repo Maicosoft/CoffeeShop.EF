@@ -1,6 +1,6 @@
 ﻿using CoffeeShop.EF.Models;
 
-namespace CoffeeShop.EF;
+namespace CoffeeShop.EF.Controllers;
 
 internal class ProductController
 {

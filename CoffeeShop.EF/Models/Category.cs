@@ -11,5 +11,6 @@ internal class Category
 
     [Required]
     public string Name { get; set; }
+
     public List<Product> Products { get; set; }
 }

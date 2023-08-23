@@ -1,7 +1,8 @@
-﻿using CoffeeShop.EF.Models;
+﻿using CoffeeShop.EF.Controllers;
+using CoffeeShop.EF.Models;
 using Spectre.Console;
 
-namespace CoffeeShop.EF;
+namespace CoffeeShop.EF.Services;
 
 internal class ProductService
 {
@@ -12,14 +13,14 @@ internal class ProductService
         product.Price = AnsiConsole.Ask<decimal>("Product's price");
         ProductController.AddProduct(product);
     }
-    internal static void GetAllProducts() 
+    internal static void GetAllProducts()
     {
         var products = ProductController.GetProducts();
         UserInterface.ShowProductTable(products);
     }
-    internal static void GetProduct() 
+    internal static void GetProduct()
     {
-        var product = ProductService.GetProductOptionInput();
+        var product = GetProductOptionInput();
         UserInterface.ShowProduct(product);
     }
     internal static void UpdateProduct()
