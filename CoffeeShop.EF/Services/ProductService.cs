@@ -11,6 +11,8 @@ internal class ProductService
         Product product = new();
         product.Name = AnsiConsole.Ask<string>("Product's name");
         product.Price = AnsiConsole.Ask<decimal>("Product's price");
+        product.CategoryId = CategoryService.GetCategoryOptionInput();
+
         ProductController.AddProduct(product);
     }
     internal static void GetAllProducts()
@@ -42,7 +44,7 @@ internal class ProductService
         ProductController.DeleteProduct(product);
     }
 
-    static private Product GetProductOptionInput()
+    private static Product GetProductOptionInput()
     {
         var products = ProductController.GetProducts();
         var productArray = products.Select(x => x.Name).ToArray();

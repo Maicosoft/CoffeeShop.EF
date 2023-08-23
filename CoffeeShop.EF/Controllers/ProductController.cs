@@ -1,4 +1,5 @@
 ﻿using CoffeeShop.EF.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.EF.Controllers;
 
@@ -22,7 +23,9 @@ internal class ProductController
     internal static Product GetProductById(int id)
     {
         using var db = new ProductsContext();
-        var product = db.Products.SingleOrDefault(x => x.ProductId == id);
+        var product = db.Products
+            .Include(x => x.Category)
+            .SingleOrDefault(x => x.ProductId == id);
 
         return product;
     }
@@ -43,7 +46,9 @@ internal class ProductController
     {
         using var db = new ProductsContext();
 
-        var products = db.Products.ToList();
+        var products = db.Products
+            .Include(x => x.Category)
+            .ToList();
 
         return products;
     }

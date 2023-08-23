@@ -21,4 +21,13 @@ internal class CategoryController
 
         return categories;
     }
+
+    internal static Category GetProductById(int id)
+    {
+        using var db = new ProductsContext();
+
+        var category = db.Categories.SingleOrDefault(x => x.CategoryId == id);
+
+        return category;
+    }
 }
