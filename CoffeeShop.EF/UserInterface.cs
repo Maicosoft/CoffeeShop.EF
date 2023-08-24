@@ -15,55 +15,106 @@ static internal class UserInterface
         {
             Console.Clear();
             var option = AnsiConsole.Prompt(
-            new SelectionPrompt<MenuOptions>()
+            new SelectionPrompt<MainMenuOptions>()
             .Title("What would you like to do?")
             .AddChoices(
-                MenuOptions.AddCategory,
-                MenuOptions.DeleteCategory,
-                MenuOptions.UpdateCategory,
-                MenuOptions.ViewCategory,
-                MenuOptions.ViewAllCategories,
-                MenuOptions.AddProduct,
-                MenuOptions.DeleteProduct,
-                MenuOptions.UpdateProduct,
-                MenuOptions.ViewProduct,
-                MenuOptions.ViewAllProducts,
-                MenuOptions.Quit));
+                MainMenuOptions.ManageProduct,
+                MainMenuOptions.ManageCategories,
+                MainMenuOptions.Quit));
 
             switch (option)
             {
-                case MenuOptions.AddCategory:
-                    CategoryService.InsertCategory();
+                case MainMenuOptions.ManageProduct:
+                    ProductsMenu();
                     break;
-                case MenuOptions.DeleteCategory:
-                    CategoryService.DeleteCategory(); 
+                case MainMenuOptions.ManageCategories:
+                    CategoriesMenu();
+                    break;                
+                case MainMenuOptions.Quit:
+                    Console.WriteLine("Goodbey");
+                    isAppRunning = false;
                     break;
-                case MenuOptions.UpdateCategory: 
-                    CategoryService.UpdateCategory();
-                    break;
-                case MenuOptions.ViewCategory:
-                    CategoryService.GetCategory();
-                    break;
-                case MenuOptions.ViewAllCategories:
-                    CategoryService.GetAllCategories();
-                    break;
-                case MenuOptions.AddProduct:
+            }
+        }
+    }
+
+    private static void ProductsMenu()
+    {
+        var isProductsMenuRunning = true;
+        while (isProductsMenuRunning)
+        {
+            Console.Clear();
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<ProductMenu>()
+            .Title("What would you like to do?")
+            .AddChoices(
+                ProductMenu.AddProduct,
+                ProductMenu.DeleteProduct,
+                ProductMenu.UpdateProduct,
+                ProductMenu.ViewProduct,
+                ProductMenu.ViewAllProducts,
+                ProductMenu.GoBack));
+
+            switch (option)
+            {
+                case ProductMenu.AddProduct:
                     ProductService.InsertProduct();
                     break;
-                case MenuOptions.DeleteProduct:
+                case ProductMenu.DeleteProduct:
                     ProductService.DeleteProduct();
                     break;
-                case MenuOptions.UpdateProduct:
+                case ProductMenu.UpdateProduct:
                     ProductService.UpdateProduct();
                     break;
-                case MenuOptions.ViewProduct:
+                case ProductMenu.ViewProduct:
                     ProductService.GetProduct();
                     break;
-                case MenuOptions.ViewAllProducts:
+                case ProductMenu.ViewAllProducts:
                     ProductService.GetAllProducts();
                     break;
-                case MenuOptions.Quit:
-                    ProductController.Quit();
+                case ProductMenu.GoBack:
+                    isProductsMenuRunning = false;
+                    break;
+            }
+        }
+    }
+
+    private static void CategoriesMenu()
+    {
+        var isCategoryMenuRunning = true;
+        while (isCategoryMenuRunning)
+        {
+            Console.Clear();
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<CategoryMenu>()
+                .Title("What would you like to do?")
+                .AddChoices(
+                CategoryMenu.AddCategory,
+                CategoryMenu.DeleteCategory,
+                CategoryMenu.UpdateCategory,
+                CategoryMenu.ViewCategory,
+                CategoryMenu.ViewAllCategories,
+                CategoryMenu.GoBack));
+
+            switch(option)
+            {
+                case CategoryMenu.AddCategory:
+                    CategoryService.InsertCategory();
+                    break;
+                case CategoryMenu.DeleteCategory:
+                    CategoryService.DeleteCategory();
+                    break;
+                case CategoryMenu.UpdateCategory:
+                    CategoryService.UpdateCategory();
+                    break;
+                case CategoryMenu.ViewCategory:
+                    CategoryService.GetCategory();
+                    break;
+                case CategoryMenu.ViewAllCategories:
+                    CategoryService.GetAllCategories();
+                    break;
+                case CategoryMenu.GoBack:
+                    isCategoryMenuRunning = false;
                     break;
             }
         }
