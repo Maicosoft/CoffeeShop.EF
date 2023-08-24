@@ -21,6 +21,7 @@ static internal class UserInterface
                 MenuOptions.AddCategory,
                 MenuOptions.DeleteCategory,
                 MenuOptions.UpdateCategory,
+                MenuOptions.ViewCategory,
                 MenuOptions.ViewAllCategories,
                 MenuOptions.AddProduct,
                 MenuOptions.DeleteProduct,
@@ -39,6 +40,9 @@ static internal class UserInterface
                     break;
                 case MenuOptions.UpdateCategory: 
                     CategoryService.UpdateCategory();
+                    break;
+                case MenuOptions.ViewCategory:
+                    CategoryService.GetCategory();
                     break;
                 case MenuOptions.ViewAllCategories:
                     CategoryService.GetAllCategories();
@@ -63,6 +67,25 @@ static internal class UserInterface
                     break;
             }
         }
+    }
+
+    internal static void ShowCategory(Category category)
+    {
+        var panel = new Panel($@"Id: {category.CategoryId}
+Name: {category.Name}
+Product Count: {category.Products.Count}")
+        {
+            Header = new PanelHeader(category.Name),
+            Padding = new Padding(2, 2, 2, 2)
+        };
+
+        AnsiConsole.Write(panel);
+
+        ShowProductTable(category.Products);
+
+        Console.WriteLine("Enter any key to continue");
+        Console.ReadLine();
+        Console.Clear();
     }
 
     internal static void ShowCategoryTable(List<Category> categories)

@@ -1,4 +1,5 @@
 ﻿using CoffeeShop.EF.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.EF.Controllers;
 
@@ -33,7 +34,9 @@ internal class CategoryController
     {
         using var db = new ProductsContext();
 
-        var categories = db.Categories.ToList();
+        var categories = db.Categories
+            .Include(x => x.Products)
+            .ToList();
 
         return categories;
     }

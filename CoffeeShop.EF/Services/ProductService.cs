@@ -8,10 +8,12 @@ internal class ProductService
 {
     internal static void InsertProduct()
     {
-        Product product = new();
-        product.Name = AnsiConsole.Ask<string>("Product's name");
-        product.Price = AnsiConsole.Ask<decimal>("Product's price");
-        product.CategoryId = CategoryService.GetCategoryOptionInput().CategoryId;
+        Product product = new()
+        {
+            Name = AnsiConsole.Ask<string>("Product's name"),
+            Price = AnsiConsole.Ask<decimal>("Product's price"),
+            CategoryId = CategoryService.GetCategoryOptionInput().CategoryId
+        };
 
         ProductController.AddProduct(product);
     }

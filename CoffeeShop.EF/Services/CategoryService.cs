@@ -8,8 +8,10 @@ internal class CategoryService
 {
     internal static void InsertCategory()
     {
-        var category = new Category();
-        category.Name = AnsiConsole.Ask<string>("Category's name:");
+        var category = new Category
+        {
+            Name = AnsiConsole.Ask<string>("Category's name:")
+        };
 
         CategoryController.AddCategory(category);
     }
@@ -32,6 +34,11 @@ internal class CategoryService
     {
         var categories = CategoryController.GetCategories();
         UserInterface.ShowCategoryTable(categories);
+    }
+    internal static void GetCategory()
+    {
+        var category = GetCategoryOptionInput();
+        UserInterface.ShowCategory(category);
     }
     internal static Category GetCategoryOptionInput()
     {
