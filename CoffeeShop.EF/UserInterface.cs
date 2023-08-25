@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.EF.Controllers;
 using CoffeeShop.EF.Models;
+using CoffeeShop.EF.Models.DTOs;
 using CoffeeShop.EF.Services;
 using Spectre.Console;
 using static CoffeeShop.EF.Enums;
@@ -20,6 +21,7 @@ static internal class UserInterface
             .AddChoices(
                 MainMenuOptions.ManageProduct,
                 MainMenuOptions.ManageCategories,
+                MainMenuOptions.ManagerOrders,
                 MainMenuOptions.Quit));
 
             switch (option)
@@ -29,10 +31,46 @@ static internal class UserInterface
                     break;
                 case MainMenuOptions.ManageCategories:
                     CategoriesMenu();
-                    break;                
+                    break;
+                case MainMenuOptions.ManagerOrders:
+                    OrdersMenu();
+                    break;
                 case MainMenuOptions.Quit:
                     Console.WriteLine("Goodbey");
                     isAppRunning = false;
+                    break;
+            }
+        }
+    }
+
+    private static void OrdersMenu()
+    {
+        var isOrdersMenuRunning = true;
+        while (isOrdersMenuRunning)
+        {
+            Console.Clear();
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<OrderMenu>()
+                .Title("What would you like to do?")
+                .AddChoices(
+                    OrderMenu.AddOrder,
+                    OrderMenu.GetOrders,
+                    OrderMenu.GetOrder,
+                    OrderMenu.GoBack));
+
+            switch (option)
+            {
+                case OrderMenu.AddOrder:
+                    OrderService.InsertOrder();
+                    break;
+                case OrderMenu.GetOrders:
+                    OrderService.GetOrders();
+                    break;
+                case OrderMenu.GetOrder:
+                    OrderService.GetOrder();
+                    break;
+                case OrderMenu.GoBack:
+                    isOrdersMenuRunning = false;
                     break;
             }
         }
@@ -199,6 +237,73 @@ Category: {product.Category.Name}")
         AnsiConsole.Write(table);
 
         Console.WriteLine("Enter any key to continue");
+        Console.ReadLine();
+        Console.Clear();
+    }
+
+    internal static void ShowOrderTable(List<Order> orders)
+    {
+        var table = new Table();
+        table.AddColumn("Id");
+        table.AddColumn("Date");
+        table.AddColumn("Count");
+        table.AddColumn("Total Price");
+
+        foreach (var order in orders)
+        {
+            table.AddRow(
+                order.OrderId.ToString(),
+                order.CreatedDate.ToString(),
+                order.OrderProducts.Sum(x => x.Quantity).ToString(),
+                order.TotalPrice.ToString()
+                );
+        }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("Enter any key to continue");
+        Console.ReadLine();
+        Console.Clear();
+    }
+
+    internal static void ShowOrder(Order order)
+    {
+        var panel = new Panel($@"Id: {order.OrderId}
+Date: {order.CreatedDate}
+Product Count: {order.OrderProducts.Sum(x => x.Quantity)}")
+        {
+            Header = new PanelHeader($"Order # {order.OrderId}"),
+            Padding = new Padding(2, 2, 2, 2)
+        };
+
+        AnsiConsole.Write(panel);
+    }
+
+    internal static void ShowProductForOrderTable(List<ProductsForOrderViewDTO> products)
+    {
+        var table = new Table();
+        table.AddColumn("Id");
+        table.AddColumn("Name");
+        table.AddColumn("Category");
+        table.AddColumn("Price");
+        table.AddColumn("Quantity");
+        table.AddColumn("Total Price");
+
+        foreach (var product in products)
+        {
+            table.AddRow(
+                product.Id.ToString(),
+                product.Name,
+                product.CategoryName,
+                product.Price.ToString(),
+                product.Quantity.ToString(),
+                product.TotalPrice.ToString()
+                );
+        }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("Press any key to return to menu");
         Console.ReadLine();
         Console.Clear();
     }

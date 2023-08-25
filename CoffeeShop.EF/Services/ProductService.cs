@@ -49,7 +49,7 @@ internal class ProductService
         ProductController.DeleteProduct(product);
     }
 
-    private static Product GetProductOptionInput()
+    internal static Product GetProductOptionInput()
     {
         var products = ProductController.GetProducts();
         var productArray = products.Select(x => x.Name).ToArray();

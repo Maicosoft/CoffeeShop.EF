@@ -45,6 +45,7 @@ internal class CategoryService
         var categories = CategoryController.GetCategories();
         var categoryArray = categories.Select(x => x.Name).ToArray();
         var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
+        
             .Title("Choose Category")
             .AddChoices(categoryArray));
         var category = categories.Single(x => x.Name == option);
